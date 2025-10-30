@@ -25,8 +25,9 @@ build_v1.36.1:
 docker_build_v1.36.1:
 	cd VictoriaLogs_v1.36.1 && \
 	docker build \
+	    --platform linux/amd64 \
 		--build-arg src_binary=victoria-logs-linux-amd64-prod \
-		--build-arg base_image=local/base:1.1.4-alpine_3.22.1-alpine_3.22.1 \
+		--build-arg base_image=alpine:3.22.2 \
 		--label "org.opencontainers.image.source=https://github.com/VictoriaMetrics/VictoriaMetrics" \
 		--label "org.opencontainers.image.documentation=https://docs.victoriametrics.com/" \
 		--label "org.opencontainers.image.title=victoria-logs" \
@@ -37,5 +38,5 @@ docker_build_v1.36.1:
 		-f app/victoria-logs/deployment/Dockerfile bin
 
 docker_push_v1.36.1:
-	docker tag victoria-metrics/victoria-logs:v1.36.1-avx2 docker.io/ahfuzhang/victoria-logs:v1.36.1-avx2
+	docker tag $$(docker inspect --format='{{.Id}}' victoriametrics/victoria-logs:v1.36.1-avx2) ahfuzhang/victoria-logs:v1.36.1-avx2 && \
 	docker push docker.io/ahfuzhang/victoria-logs:v1.36.1-avx2

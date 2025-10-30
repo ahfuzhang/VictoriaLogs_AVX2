@@ -50,3 +50,31 @@ When you modify code, made a patch file:
 ```bash
 make diff_v1.36.1
 ```
+
+# K8s deploy example
+
+```yaml
+apiVersion: operator.victoriametrics.com/v1
+kind: VLSingle
+metadata:
+  name: singlenode-on-k8s
+  namespace: logging
+spec:
+  extraEnvs:
+    - name: GOMAXPROCS
+      value: '2'
+  image:
+    pullPolicy: Always
+    repository: docker.io/ahfuzhang/victoria-logs
+    tag: v1.36.1-avx2
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 2
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 500Mi
+  retentionPeriod: 7d
+
+```

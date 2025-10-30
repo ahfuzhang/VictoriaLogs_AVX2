@@ -1,9 +1,9 @@
 diff --git a/lib/encoding/is_sorted_timing_test.go b/lib/encoding/is_sorted_timing_test.go
 new file mode 100644
-index 000000000..2ef2a1ab7
+index 000000000..9b46f1cdf
 --- /dev/null
 +++ b/lib/encoding/is_sorted_timing_test.go
-@@ -0,0 +1,75 @@
+@@ -0,0 +1,95 @@
 +package encoding
 +
 +import (
@@ -42,6 +42,18 @@ index 000000000..2ef2a1ab7
 +
 +golang version: 5134.81 MB/s
 +30.18% faster
++---------------------------------------------------------
++goos: linux
++goarch: amd64
++pkg: github.com/VictoriaMetrics/VictoriaLogs/lib/encoding
++cpu: Intel(R) Core(TM) Ultra 7 265KF   3.9 GHz
++BenchmarkIsInt64ArraySorted-20               439           2664248 ns/op        31485.84 MB/s          0 B/op          0 allocs/op
++PASS
++ok      github.com/VictoriaMetrics/VictoriaLogs/lib/encoding    1.500s
++
++golang version: 24795.83 MB/s
++27.01% faster
++---------------------------------------------------------
 +*/
 +func BenchmarkIsInt64ArraySorted(b *testing.B) {
 +	cnt := 1024 * 1024 * 10
@@ -66,6 +78,14 @@ index 000000000..2ef2a1ab7
 +=== RUN   Benchmark_is_sorted_slow
 +Benchmark_is_sorted_slow
 +Benchmark_is_sorted_slow-8            82          16336747 ns/op        5134.81 MB/s           0 B/op          0 allocs/op
++
++goos: linux
++goarch: amd64
++pkg: github.com/VictoriaMetrics/VictoriaLogs/lib/encoding
++cpu: Intel(R) Core(TM) Ultra 7 265KF    3.9 GHz
++Benchmark_is_sorted_slow-20          346           3383072 ns/op        24795.83 MB/s          0 B/op          0 allocs/op
++PASS
++ok      github.com/VictoriaMetrics/VictoriaLogs/lib/encoding    1.571s
 +*/
 +func Benchmark_is_sorted_slow(b *testing.B) {
 +	cnt := 1024 * 1024 * 10

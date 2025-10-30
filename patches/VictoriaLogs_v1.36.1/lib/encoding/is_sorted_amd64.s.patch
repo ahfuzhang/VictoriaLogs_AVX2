@@ -1,9 +1,9 @@
 diff --git a/lib/encoding/is_sorted_amd64.s b/lib/encoding/is_sorted_amd64.s
 new file mode 100644
-index 000000000..07a087eeb
+index 000000000..6fbd62bf1
 --- /dev/null
 +++ b/lib/encoding/is_sorted_amd64.s
-@@ -0,0 +1,54 @@
+@@ -0,0 +1,53 @@
 +#include "textflag.h"
 +
 +TEXT ·IsInt64ArraySorted(SB), NOSPLIT | NOFRAME, $0-25
@@ -57,5 +57,3 @@ index 000000000..07a087eeb
 +    MOVB $1, ret+24(FP)  // return 1
 +    VZEROUPPER
 +    RET
-+    
-\ No newline at end of file

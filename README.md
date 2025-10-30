@@ -51,6 +51,8 @@ When you modify code, made a patch file:
 make diff_v1.36.1
 ```
 
+see: https://hub.docker.com/repository/docker/ahfuzhang/victoria-logs/general
+
 # K8s deploy example
 
 ```yaml

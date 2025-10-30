@@ -1,0 +1,9 @@
+diff --git a/lib/encoding/is_sorted_amd64.go b/lib/encoding/is_sorted_amd64.go
+new file mode 100644
+index 000000000..e984367a1
+--- /dev/null
++++ b/lib/encoding/is_sorted_amd64.go
+@@ -0,0 +1,3 @@
++package encoding
++
++func IsInt64ArraySorted(a []int64) bool

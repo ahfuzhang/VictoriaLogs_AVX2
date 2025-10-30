@@ -6,6 +6,7 @@ clone_v1.36.1:
 diff_v1.36.1:
 	mkdir -p patches/VictoriaLogs_v1.36.1/ && \
 	cd VictoriaLogs_v1.36.1 && \
+	git add -N . && \
 	git diff --name-only | while read file; do \
 		mkdir -p "../patches/VictoriaLogs_v1.36.1/$$(dirname $$file)"; \
 		git diff "$$file" > "../patches/VictoriaLogs_v1.36.1/$$file.patch"; \

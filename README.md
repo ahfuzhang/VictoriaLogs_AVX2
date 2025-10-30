@@ -1,4 +1,51 @@
 
 VictoriaLogs with AVX2.
+
 The plan is to try using the avx2 instruction set to optimize performance based on the official VictoriaLogs version.
 
+> I submitted a pull request to the VictoriaLogs team for an AVX2-accelerated implementation using Plan9 assembly, but they rejected it.
+> 
+> I completely understand. On one hand, Plan9 assembly is difficult to master; on the other hand, assembly optimization might not align with VictoriaLogs' product direction.
+> 
+> However, I personally need to quickly reduce the computational cost of logging in a production environment.
+> 
+> To bridge this gap, I plan to patch an existing version of VictoriaLogs, allowing some frequently accessed code to benefit from the AVX2 acceleration.
+
+# How to use
+
+1. Clone by version
+
+```bash
+make clone_v1.36.1
+```
+
+2. patch
+
+```bash
+make patch_v1.36.1
+```
+
+3. build
+
+```bash
+make build_v1.36.1
+```
+
+4. docker build
+
+```bash
+make docker_build_v1.36.1
+```
+
+5. docker push
+
+```bash
+make docker_push_v1.36.1
+```
+
+6. diff
+When you modify code, made a patch file:
+
+```bash
+make diff_v1.36.1
+```

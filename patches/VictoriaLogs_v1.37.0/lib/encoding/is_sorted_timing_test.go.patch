@@ -1,0 +1,103 @@
+diff --git a/lib/encoding/is_sorted_timing_test.go b/lib/encoding/is_sorted_timing_test.go
+new file mode 100644
+index 000000000..138a6eafc
+--- /dev/null
++++ b/lib/encoding/is_sorted_timing_test.go
+@@ -0,0 +1,97 @@
++package encoding
++
++import (
++	"math/rand"
++	"testing"
++)
++
++func isSortedSlow(a []int64) bool {
++	for i := range a {
++		if i > 0 && a[i] < a[i-1] {
++			return false
++		}
++	}
++	return true
++}
++
++func getDeltaData(cnt int) []int64 {
++	arr := make([]int64, cnt)
++	seed := rand.Int63n(0x7f7f7f7f7f7f7f7f)
++	for i := 0; i < cnt; i++ {
++		arr[i] = seed + int64(i)
++	}
++	return arr
++}
++
++/*
++go test -benchmem -run=^$ -bench ^BenchmarkIsInt64ArraySorted$ github.com/VictoriaMetrics/VictoriaLogs/lib/encoding
++
++goos: linux
++goarch: amd64
++pkg: github.com/VictoriaMetrics/VictoriaMetrics/lib/encoding
++cpu: Intel(R) Xeon(R) Platinum 8260 CPU @ 2.40GHz
++=== RUN   BenchmarkIsInt64ArraySorted
++BenchmarkIsInt64ArraySorted
++BenchmarkIsInt64ArraySorted-8                100          11406021 ns/op        7354.54 MB/s           0 B/op          0 allocs/op
++
++golang version: 5134.81 MB/s
++30.18% faster
++---------------------------------------------------------
++goos: linux
++goarch: amd64
++pkg: github.com/VictoriaMetrics/VictoriaLogs/lib/encoding
++cpu: Intel(R) Core(TM) Ultra 7 265KF   3.9 GHz
++BenchmarkIsInt64ArraySorted-20               439           2664248 ns/op        31485.84 MB/s          0 B/op          0 allocs/op
++PASS
++ok      github.com/VictoriaMetrics/VictoriaLogs/lib/encoding    1.500s
++
++golang version: 24795.83 MB/s
++27.01% faster
++---------------------------------------------------------
++30214.36 MB/s. 这个版本把两次 load_u 变成 1 次 load_u, 性能下降 (1-31485.84/30214.36)= -4.2%
++31774.13 MB/s  这个版本使用 vptest 指令。 (31774.13/31485.84-1)= 0.91% 提升
++*/
++func BenchmarkIsInt64ArraySorted(b *testing.B) {
++	cnt := 1024 * 1024 * 10
++	arr := getDeltaData(cnt)
++	b.SetBytes(int64(cnt * 8))
++	b.ResetTimer()
++	for i := 0; i < b.N; i++ {
++		ret := IsInt64ArraySorted(arr)
++		if !ret {
++			b.Fatalf("ret=%v", ret)
++		}
++	}
++}
++
++/*
++go test -benchmem -run=^$ -bench ^Benchmark_is_sorted_slow$ github.com/VictoriaMetrics/VictoriaLogs/lib/encoding
++
++goos: linux
++goarch: amd64
++pkg: github.com/VictoriaMetrics/VictoriaMetrics/lib/encoding
++cpu: Intel(R) Xeon(R) Platinum 8260 CPU @ 2.40GHz
++=== RUN   Benchmark_is_sorted_slow
++Benchmark_is_sorted_slow
++Benchmark_is_sorted_slow-8            82          16336747 ns/op        5134.81 MB/s           0 B/op          0 allocs/op
++
++goos: linux
++goarch: amd64
++pkg: github.com/VictoriaMetrics/VictoriaLogs/lib/encoding
++cpu: Intel(R) Core(TM) Ultra 7 265KF    3.9 GHz
++Benchmark_is_sorted_slow-20          346           3383072 ns/op        24795.83 MB/s          0 B/op          0 allocs/op
++PASS
++ok      github.com/VictoriaMetrics/VictoriaLogs/lib/encoding    1.571s
++*/
++func Benchmark_is_sorted_slow(b *testing.B) {
++	cnt := 1024 * 1024 * 10
++	arr := getDeltaData(cnt)
++	b.SetBytes(int64(cnt * 8))
++	b.ResetTimer()
++	for i := 0; i < b.N; i++ {
++		ret := isSortedSlow(arr)
++		if !ret {
++			b.Fatalf("ret=%v", ret)
++		}
++	}
++}

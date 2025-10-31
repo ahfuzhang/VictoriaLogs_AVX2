@@ -16,31 +16,31 @@ The plan is to try using the avx2 instruction set to optimize performance based 
 1. Clone by version
 
 ```bash
-make clone_v1.36.1
+make clone  # or make clone ver=v1.37.0
 ```
 
 2. patch
 
 ```bash
-make patch_v1.36.1
+make patch  # or make patch ver=v1.37.0
 ```
 
 3. build
 
 ```bash
-make build_v1.36.1
+make build  # or make build ver=v1.37.0
 ```
 
 4. docker build
 
 ```bash
-make docker_build_v1.36.1
+make docker_build  # or make docker_build ver=v1.37.0
 ```
 
 5. docker push
 
 ```bash
-make docker_push_v1.36.1
+make docker_push  # or make docker_push ver=v1.37.0
 ```
 
 6. diff
@@ -48,7 +48,7 @@ make docker_push_v1.36.1
 When you modify code, made a patch file:
 
 ```bash
-make diff_v1.36.1
+make diff  # or make diff ver=v1.37.0
 ```
 
 see: https://hub.docker.com/repository/docker/ahfuzhang/victoria-logs/general
@@ -68,7 +68,7 @@ spec:
   image:
     pullPolicy: Always
     repository: docker.io/ahfuzhang/victoria-logs
-    tag: v1.36.1-avx2
+    tag: v1.37.0-avx2
   replicaCount: 1
   resources:
     limits:

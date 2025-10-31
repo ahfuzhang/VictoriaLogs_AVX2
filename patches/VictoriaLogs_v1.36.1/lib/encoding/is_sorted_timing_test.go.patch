@@ -1,9 +1,9 @@
 diff --git a/lib/encoding/is_sorted_timing_test.go b/lib/encoding/is_sorted_timing_test.go
 new file mode 100644
-index 000000000..9b46f1cdf
+index 000000000..138a6eafc
 --- /dev/null
 +++ b/lib/encoding/is_sorted_timing_test.go
-@@ -0,0 +1,95 @@
+@@ -0,0 +1,97 @@
 +package encoding
 +
 +import (
@@ -54,6 +54,8 @@ index 000000000..9b46f1cdf
 +golang version: 24795.83 MB/s
 +27.01% faster
 +---------------------------------------------------------
++30214.36 MB/s. 这个版本把两次 load_u 变成 1 次 load_u, 性能下降 (1-31485.84/30214.36)= -4.2%
++31774.13 MB/s  这个版本使用 vptest 指令。 (31774.13/31485.84-1)= 0.91% 提升
 +*/
 +func BenchmarkIsInt64ArraySorted(b *testing.B) {
 +	cnt := 1024 * 1024 * 10
